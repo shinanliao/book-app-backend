@@ -22,17 +22,22 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(params[:id])
-    if current user == user
-      user.username = params[:username] || user.username
-      user.email = params[:email] || user.email
-      user.password_digest = params[:password_digest] || user.password_digest
-      user.biography = params[:biography] || user.biography
-      user.currently_reading = params[:currently_reading] || user.currently_reading
-      if user.save
-        render json: user
-      else
-        render json: { errors: user.error.full_messages }, status: :unprocessable_entity
-      end  
-    end
+    user.username = params[:username] || user.username
+    user.email = params[:email] || user.email
+    user.biography = params[:biography] || user.biography
+    user.currently_reading = params[:currently_reading] || user.currently_reading
+    if user.save
+      render json: user
+    else
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+    end  
   end
+
+  def destroy
+    user = User.find(params[:id])
+    user.destroy
+    render json: {message: "User successfully destroyed"}
+  end
+  
 end
+  
