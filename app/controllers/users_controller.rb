@@ -6,7 +6,8 @@ class UsersController < ApplicationController
       password: params[:password],
       password_confirmation: params[:password_confirmation],
       biography: params[:biography],
-      currently_reading: params[:currently_reading]
+      currently_reading: params[:currently_reading],
+      #public: params[:public] == "1"
     )
     if user.save
       render json: { message: "User created successfully" }, status: :created
