@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       #public: params[:public] == "1"
     )
     if user.save
-      render json: { message: "User created successfully" }, status: :created
+      render json: user
     else
       render json: { errors: user.errors.full_messages }, status: :bad_request
     end
@@ -26,6 +26,7 @@ class UsersController < ApplicationController
     if current_user == user
       user.username = params[:username] || user.username
       user.email = params[:email] || user.email
+      # user.password = params[:password] || user.password
       user.biography = params[:biography] || user.biography
       user.currently_reading = params[:currently_reading] || user.currently_reading
       if user.save

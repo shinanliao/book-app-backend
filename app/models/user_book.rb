@@ -14,6 +14,7 @@ class UserBook < ApplicationRecord
       author: api_book_object["volumeInfo"]["authors"][0],
       publisher: api_book_object["volumeInfo"]["publisher"],
       description: api_book_object["volumeInfo"]["description"],
+      image: api_book_object["volumeInfo"]["imageLinks"]["thumbnail"]
     }
   end
 end

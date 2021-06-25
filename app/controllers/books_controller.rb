@@ -3,7 +3,7 @@ class BooksController < ApplicationController
   def index
     query = params[:query].gsub(" ", "%")
     books = HTTP.get("https://www.googleapis.com/books/v1/volumes?q=#{query}&printType=books&key=#{Rails.application.credentials.google_books_api_key}")
-    render json: books.parse(:json)["items"][0]
+    render json: books.parse(:json)["items"]
   end
 
   def show

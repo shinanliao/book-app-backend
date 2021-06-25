@@ -7,26 +7,26 @@ class UserBooksController < ApplicationController
 
   def create
     user_books = UserBook.new(
-      user_id: params[:user_id],
+      user_id: current_user.id,
       google_books_api_id: params[:google_books_api_id],
       comments: params[:comments],
       have_read: params[:have_read],
     )
     if user_books.save
-      render json: { message: "Succesfully Saved!" }, status: :created
+      render json: user_books, status: :created
     else
-      render json: { message: "Please Login to Complete This Request" }, status: :unauthorized
+      render json: { errors: user_books.errors.full_messages }, status: :unauthorized
     end
   end
 
   def update
     user_books = UserBook.find(params[:id])
     if current_user == user_books.user
-      user_books.comments = params[:comments] || user.comments
+      user_books.comments = params[:comments] || user_book.comments
       if user_books.save
         render json: user_books
       else
-        render json: { message: "Please Login to Complete This Request" }, status: :unauthorized
+        render json: { errors: user_books.errors.full_messages }, status: :unauthorized
       end
     end  
   end
@@ -34,7 +34,8 @@ class UserBooksController < ApplicationController
   def destroy
     user_books = UserBook.find(params[:id])
     if current_user == user_books.user
-    user_books.destroy
-    render json: {message: "Successfully destroyed!"}
+      user_books.delete
+      render json: {message: "Successfully destroyed!"}
+    end
   end
 end
