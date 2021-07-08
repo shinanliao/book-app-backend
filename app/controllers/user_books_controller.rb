@@ -22,7 +22,8 @@ class UserBooksController < ApplicationController
   def update
     user_books = UserBook.find(params[:id])
     if current_user == user_books.user
-      user_books.comments = params[:comments] || user_book.comments
+      user_books.comments = params[:comments] || user_books.comments
+      user_books.have_read = params[:have_read] || user_books.have_read
       if user_books.save
         render json: user_books
       else
