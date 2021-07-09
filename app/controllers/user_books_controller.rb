@@ -23,7 +23,11 @@ class UserBooksController < ApplicationController
     user_books = UserBook.find(params[:id])
     if current_user == user_books.user
       user_books.comments = params[:comments] || user_books.comments
-      user_books.have_read = params[:have_read] || user_books.have_read
+      if params[:have_read] == true
+        user_books.have_read = true
+      elsif params[:have_read] == false
+        user_books.have_read = false
+      end
       if user_books.save
         render json: user_books
       else
