@@ -10,7 +10,7 @@ class UserBooksController < ApplicationController
       user_id: current_user.id,
       google_books_api_id: params[:google_books_api_id],
       comments: params[:comments],
-      have_read: params[:have_read],
+      have_read: false
     )
     if user_books.save
       render json: user_books, status: :created
